@@ -1,0 +1,29 @@
+# CMake and Build directories
+cmake-build-*/
+build/
+out/
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Makefile
+cmake_install.cmake
+
+# Compiled Executables and Objects
+*.exe
+*.out
+*.app
+*.o
+*.obj
+*.dll
+*.so
+*.dylib
+
+# IDE specific folders (CLion, VS Code, Visual Studio)
+.idea/
+.vscode/
+.vs/
+*.user
+
+# OS generated files (Mac / Windows)
+.DS_Store
+Thumbs.db
