@@ -1,22 +1,22 @@
 #include <iostream>
 #include "Item.h"
+#include "Character.h"
 #include "Player.h"
+#include "potion.h"
 
 int main()
 {
-    Player player1("Bob", 100, 10, 75);
+    Player player("Bob", 100, 10, 75);
+    Potion potion("Health Potion", Item::Rarity::gold, 2, 4);
+    Item orb("Orb of dismay", Item::ItemType::none, Item::Rarity::gold, 10);
 
-    Item sword("Sword", Item::Rarity::purple, 50, 50);
-    Item shield("Shield", Item::Rarity::white, 50, 25);
+    Item sword("Sword", Item::ItemType::sword, Item::Rarity::purple, 10);
+    Item shield("Shield", Item::ItemType::shield, Item::Rarity::white, 10);
 
-    std::cout << "Player Name: " << player1.getPlayerName() << '\n';
+    std::cout << "Player Name: " << player.getName() << "\n\n";
 
-    player1.getPlayerItem(0);
-    player1.playerPickupItem(sword);
-    player1.playerPickupItem(shield);
-    player1.playerTakeDamage(6);
-    player1.getPlayerBackpackContents();
-    player1.playerDropItem(1);
-    player1.getPlayerBackpackContents();
+    player.takeDamage(0);
+    player.useItem(potion);
+    player.useItem(orb);
 
 }

@@ -1,17 +1,12 @@
-//
-// Created by David Gonzalez on 7/31/26.
-//
-
 #include "Item.h"
 #include <utility>
 
-Item::Item (std::string name, Rarity rarity, int strength, int weight) :
-            itemName(std::move(name)), itemRarity(rarity), itemStrength(strength),
-            itemWeight(weight)
+Item::Item(std::string name, ItemType item, Rarity rarity, int weight) :
+            itemName(std::move(name)), itemType(item), itemRarity(rarity), itemWeight(weight)
 {
 }
 
-std::string Item::getItemRarity() const
+std::string Item::getItemRarityColor() const
 {
     switch (itemRarity)
     {
@@ -21,11 +16,24 @@ std::string Item::getItemRarity() const
         case Rarity::blue: return "Blue";
         case Rarity::purple: return "Purple";
         case Rarity::gold: return "Gold";
-        default: return "Unknown";
+        default: return "Rarity Unknown";
     }
-
 }
 
+std::string Item::getItemType() const
+{
+    switch (itemType)
+    {
+        case ItemType::none: return "No Type";
+        case ItemType::sword: return "Sword";
+        case ItemType::shield: return "Shield";
+        case ItemType::helmet: return "Helmet";
+        case ItemType::chest: return "Chest";
+        case ItemType::leggings: return "Leggings";
+        case ItemType::potion: return "Potion";
+        default: return "Type Unknown";
+    }
+}
 
 
 

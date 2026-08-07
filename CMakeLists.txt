@@ -5,7 +5,11 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(cpp_console_rpg main.cpp
+        Character.cpp
+        Character.h
+        Item.cpp
+        Item.h
         Player.cpp
         Player.h
-        Item.cpp
-        Item.h)
+        Potion.cpp
+        Potion.h)

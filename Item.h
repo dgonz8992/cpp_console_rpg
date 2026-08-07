@@ -1,38 +1,56 @@
-//
-// Created by David Gonzalez on 7/31/26.
-//
-
 #ifndef FORLEARNING_ITEM_H
 #define FORLEARNING_ITEM_H
+
 #include <string>
+#include <iostream>
+
+class Character;
 
 class Item
 {
 public:
     enum class Rarity
     {
-        none,
-        white,
-        green,
-        blue,
-        purple,
-        gold
+        none = 0,
+        white = 10,
+        green = 20,
+        blue = 30,
+        purple = 40,
+        gold = 50
     };
 
-    Item (std::string name, Rarity rarity, int strength, int weight);
-    void itemDamage();
+    enum class ItemType
+    {
+        none,
+        sword,
+        shield,
+        helmet,
+        chest,
+        leggings,
+        potion,
+
+    };
+
+    Item(std::string name, ItemType item, Rarity rarity, int weight);
+    virtual ~Item() = default;
+
+    virtual void itemEffects(Character& character)
+    {
+        std::cout << "Item cannot be used.\n\n";
+    }
+
     [[nodiscard]] std::string getItemName() const {return itemName;}
-    [[nodiscard]] std::string getItemRarity() const;
-    [[nodiscard]] int getItemStrength() const {return itemStrength;}
+    [[nodiscard]] std::string getItemRarityColor() const;
+    [[nodiscard]] int getItemRarityStrength() const {return static_cast<int>(itemRarity);}
+    [[nodiscard]] std::string getItemType() const;
     [[nodiscard]] int getItemWeight() const {return itemWeight;}
 
-private:
+protected:
     std::string itemName;
     Rarity itemRarity;
-    int itemStrength = 10;
-    int itemWeight = 10;
+    ItemType itemType;
+    int itemWeight;
 
 };
-
 
 #endif //FORLEARNING_ITEM_H
