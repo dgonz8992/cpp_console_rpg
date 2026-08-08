@@ -10,12 +10,12 @@ class Character
 public:
     Character(std::string name, int health, int strength, int weight);
 
-    void pickupItem(const Item& item);
+    void pickupItem(std::unique_ptr<Item> item);
     void dropItem(size_t backpackSlot);
-    void takeDamage(int damageTaken);
+    void takeDamage(Character& character);
     [[nodiscard]] int dealDamage() const;
     void equipItem(size_t backpackSlot);
-    void useItem(Item& item);
+    void useItem(int backpackSlot);
 
     //Setters
     void setHealth(int newPlayerHealth) {characterHealth = newPlayerHealth;}
@@ -34,20 +34,17 @@ public:
     void getItem(size_t backpackSlot) const;
 
 protected:
-    Item hands{"Bare Hands", Item::ItemType::none, Item::Rarity::white, 0};
-    Item empty{"Empty", Item::ItemType::none, Item::Rarity::none,  0};
-
     std::string characterName;
     int maxCharacterHealth;
     int characterHealth = maxCharacterHealth;
 
+    int characterStrength = 10;
+
     int characterMaxWeight = 50;
     int characterCurrentWeight = 0;
 
-    int characterStrength = 10;
-
-    std::vector<Item> backpack = {hands};
-    Item characterItemEquipped = hands;
+    std::vector<std::unique_ptr<Item>> backpack;
+    std::unique_ptr<Item> characterItemEquipped = nullptr;
 };
 
 #endif //FORLEARNING_PLAYER_H

@@ -12,4 +12,5 @@ add_executable(cpp_console_rpg main.cpp
         Player.cpp
         Player.h
         Potion.cpp
-        Potion.h)
+        Potion.h
+)
