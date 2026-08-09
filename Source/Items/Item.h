@@ -5,6 +5,7 @@
 #include <iostream>
 
 class Character;
+int RNG(int min, int max);
 
 class Item
 {
@@ -38,6 +39,13 @@ public:
     {
         std::cout << "Item cannot be used.\n\n";
     }
+
+    virtual int getDamage() const
+    {
+        std::cout << "This is not a weapon\n\n";
+        return 0;
+    }
+
 
     [[nodiscard]] std::string getItemName() const {return itemName;}
     [[nodiscard]] std::string getItemRarityColor() const;
