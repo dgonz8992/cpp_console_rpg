@@ -1,9 +1,12 @@
 #ifndef FORLEARNING_PLAYER_H
 #define FORLEARNING_PLAYER_H
 
+#include <utility>
 #include <vector>
 #include <string>
 #include "Item.h"
+
+int RNG(int min, int max);
 
 class Character
 {
@@ -12,12 +15,13 @@ public:
 
     void pickupItem(std::unique_ptr<Item> item);
     void dropItem(size_t backpackSlot);
-    void takeDamage(Character& character);
+    void takeDamage(const Character& attacker);
     [[nodiscard]] int dealDamage() const;
     void equipItem(size_t backpackSlot);
     void useItem(int backpackSlot);
 
     //Setters
+    void setName(std::string newCharacterName) {characterName = std::move(newCharacterName);}
     void setHealth(int newPlayerHealth) {characterHealth = newPlayerHealth;}
     void setMaxHealth(int newMaxHealth) {maxCharacterHealth = newMaxHealth;}
     void setStrength(int newCharacterStrength) {characterStrength = newCharacterStrength;}

@@ -1,7 +1,6 @@
 #include <iostream>
 #include <utility>
 #include <algorithm>
-#include <random>
 #include "Character.h"
 
 Character::Character(std::string name, int health, int strength, int weight)
@@ -22,12 +21,12 @@ void Character::pickupItem(std::unique_ptr<Item> item)
 
     bool slotFilled = false;
 
-    for (int i = 0; i < backpack.size(); i++)
+    for (auto& i : backpack)
     {
 
-        if (backpack[i] == nullptr)
+        if (i == nullptr)
         {
-            backpack[i] = std::move(item);
+            i = std::move(item);
             slotFilled = true;
             break;
         }
@@ -53,13 +52,19 @@ void Character::dropItem(const size_t backpackSlot)
     }
 }
 
-void Character::takeDamage(Character& character)
+void Character::takeDamage(const Character& attacker)
 {
-    int damageTaken = character.dealDamage();
+    if (RNG(0, 10) < 4)
+    {
+        std::cout << attacker.getName() << " missed!\n";
+        return;
+    }
+
+    int damageTaken = attacker.dealDamage();
     characterHealth -= damageTaken;
     characterHealth = std::clamp(characterHealth, 0, maxCharacterHealth);
 
-    std::cout << character.getName() << " inflicted " << damageTaken << " points of damage to " << characterName << std::endl;
+    std::cout << attacker.getName() << " inflicted " << damageTaken << " points of damage to " << characterName << std::endl;
 
     if (characterHealth == 0)
     {std::cout << getName() << " died!\n\n";}
@@ -76,12 +81,7 @@ int Character::dealDamage() const
 
     int damageDealt = characterStrength + itemDamage;
 
-    static std::random_device randomDevice;
-    static std::mt19937 generator(randomDevice());
-
-    std::uniform_int_distribution<int> distribution(damageDealt - characterStrength, damageDealt);
-
-    int damageOutput = distribution(generator);
+    int damageOutput = RNG(damageDealt - characterStrength, damageDealt);
 
     return damageOutput;
 
