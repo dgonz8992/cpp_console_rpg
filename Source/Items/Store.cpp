@@ -21,7 +21,7 @@ void Store::listItems() const
 
 std::unique_ptr<Item> Store::purchaseItem(size_t storeSlot)
 {
-    if (storeSlot >= storeItems.size())
+    if (storeSlot > storeItems.size())
     {
         std::cout << "Invalid item slot!\n\n";
         return nullptr;

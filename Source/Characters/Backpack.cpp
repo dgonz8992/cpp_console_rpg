@@ -11,8 +11,6 @@ size_t Backpack::size() const
 
 void Backpack::stashItem(std::unique_ptr<Item> item, size_t backpackSlot)
 {
-    bool slotFilled = false;
-
     if (backpackSlot < backpack.size())
     {
         if (backpack[backpackSlot] == nullptr)
@@ -21,6 +19,8 @@ void Backpack::stashItem(std::unique_ptr<Item> item, size_t backpackSlot)
             return;
         }
     }
+
+    bool slotFilled = false;
 
     for (auto& i : backpack)
     {
@@ -58,7 +58,10 @@ void Backpack::getItem(const size_t backpackSlot) const
     if (backpackSlot >= backpack.size())
         std::cout << "Invalid slot!\n\n";
     else if (backpack[backpackSlot] == nullptr)
-        std::cout << "Slot is empty!\n\n";
+    {
+        std::cout << "Slot " << backpackSlot + 1 << std::endl;
+        std::cout << "Empty\n\n";
+    }
     else
     {
         std::cout << "Slot " << backpackSlot + 1 << ":\n";
