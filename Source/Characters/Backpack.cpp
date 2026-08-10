@@ -9,7 +9,7 @@ size_t Backpack::size() const
     return backpack.size();
 }
 
-void Backpack::storeItem(std::unique_ptr<Item> item, size_t backpackSlot)
+void Backpack::stashItem(std::unique_ptr<Item> item, size_t backpackSlot)
 {
     bool slotFilled = false;
 
@@ -73,21 +73,10 @@ void Backpack::getItem(const size_t backpackSlot) const
 
 void Backpack::getBackpackContents() const
 {
-    std::cout << "Backpack contents: \n";
+    std::cout << "Contents: \n";
     for (size_t i = 0; i < backpack.size(); i++)
     {
-        if (backpack[i] == nullptr)
-        {
-            std::cout << "Slot " << i+1 << ":\n";
-            std::cout << "Empty\n\n";
-            continue;
-        }
-        std::cout << "Slot " << i+1 << ":\n";
-        std::cout << "Name: " << backpack[i]->getItemName() << std::endl;
-        std::cout << "Strength: " << backpack[i]->getItemRarityStrength() << std::endl;
-        std::cout << "Rarity: " << backpack[i]->getItemRarityColor() << std::endl;
-        std::cout << "Weight: " << backpack[i]->getItemWeight() << std::endl;
-        std::cout << '\n';
+        this->getItem(i);
     }
-    std::cout << "======================================\n\n";
+    std::cout << "=====================================\n\n";
 }

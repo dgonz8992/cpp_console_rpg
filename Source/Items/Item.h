@@ -53,6 +53,7 @@ public:
     [[nodiscard]] int getItemRarityStrength() const {return static_cast<int>(itemRarity);}
     [[nodiscard]] std::string getItemType() const;
     [[nodiscard]] int getItemWeight() const {return itemWeight;}
+    void getStats() const;
 
 protected:
     std::string itemName;

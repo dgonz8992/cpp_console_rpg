@@ -19,6 +19,8 @@ add_executable(cpp_console_rpg
         Source/Items/Sword.h
         Source/Characters/Backpack.cpp
         Source/Characters/Backpack.h
+        Source/Items/Store.cpp
+        Source/Items/Store.h
 )
 
 target_include_directories(cpp_console_rpg PUBLIC

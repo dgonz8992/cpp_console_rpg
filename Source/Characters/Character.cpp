@@ -17,7 +17,7 @@ void Character::pickupItem(std::unique_ptr<Item> item)
     }
     characterCurrentWeight += item->getItemWeight();
     std::cout << "Picked up " << item->getItemName() << "\n\n";
-    inventory.storeItem(std::move(item));
+    inventory.stashItem(std::move(item));
 }
 
 void Character::dropItem(const size_t backpackSlot)
@@ -77,11 +77,11 @@ void Character::equipItem(const size_t backpackSlot)
     if (newItem == nullptr)
     {
         std::cout << "Invalid or Empty slot!\n\n";
-        inventory.storeItem(std::move(newItem), backpackSlot);
+        inventory.stashItem(std::move(newItem), backpackSlot);
         return;
     }
     std::swap(characterItemEquipped, newItem);
-    inventory.storeItem(std::move(newItem), backpackSlot);
+    inventory.stashItem(std::move(newItem), backpackSlot);
     std::cout << characterItemEquipped->getItemName() << " equipped.\n\n";
 }
 
@@ -103,7 +103,7 @@ void Character::useItem(size_t backpackSlot)
     const bool useItem = item->itemEffects(*this);
 
     if (!useItem)
-        inventory.storeItem(std::move(item), backpackSlot);
+        inventory.stashItem(std::move(item), backpackSlot);
 }
 
 void Character::getBackpackContents() const

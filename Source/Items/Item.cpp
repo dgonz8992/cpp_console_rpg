@@ -35,5 +35,14 @@ std::string Item::getItemType() const
     }
 }
 
+void Item::getStats() const
+{
+    std::cout << "Name: " << getItemName() << std::endl,
+    std::cout << "Type: " << getItemType() << std::endl;
+    std::cout << "Rarity: " << getItemRarityColor() << std::endl;
+    std::cout << "Strength: " << getItemRarityStrength() << std::endl;
+    std::cout << "Weight: " << getItemWeight() << "\n\n";
+}
+
 
 
