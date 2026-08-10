@@ -35,12 +35,13 @@ public:
     Item(std::string name, ItemType item, Rarity rarity, int weight);
     virtual ~Item() = default;
 
-    virtual void itemEffects(Character& character)
+    virtual bool itemEffects(Character& character)
     {
         std::cout << "Item cannot be used.\n\n";
+        return false;
     }
 
-    virtual int getDamage() const
+    [[nodiscard]] virtual int getDamage() const
     {
         std::cout << "This is not a weapon\n\n";
         return 0;

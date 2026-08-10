@@ -8,18 +8,18 @@
     Potion::Potion(std::string name, Rarity rarity, int weight, int effectAmount)
         : Item(std::move(name), ItemType::potion, rarity, weight), potionEffectAmount(effectAmount) {}
 
-    void Potion::itemEffects(Character& character)
+    bool Potion::itemEffects(Character& character)
     {
         if (character.getHealth() == 0)
         {
             std::cout << "Cannot heal as " << character.getName() << " is dead!\n\n";
-            return;
+            return false;
         }
 
         if (character.getHealth() == character.getMaxHealth())
         {
             std::cout << character.getName() << " is already at max health!\n\n";
-            return;
+            return false;
         }
 
         if (potionEffectAmount + character.getHealth() > character.getMaxHealth())
@@ -28,4 +28,5 @@
         character.setHealth(character.getHealth() + potionEffectAmount);
         std::cout << character.getName() << " healed by " << potionEffectAmount << " points" << std::endl;
         std::cout << "Current Health: " << character.getHealth() << "\n\n";
+        return true;
     }

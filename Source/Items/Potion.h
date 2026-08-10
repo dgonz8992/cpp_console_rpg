@@ -12,10 +12,10 @@ class Potion : public Item
 public:
     Potion(std::string name, Rarity rarity, int weight, int effectAmount);
 
-   void itemEffects(Character& character) override;
+   bool itemEffects(Character& character) override;
 
 private:
-    int potionEffectAmount;
+    bool potionEffectAmount;
 };
 
 

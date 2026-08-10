@@ -8,8 +8,6 @@ class Player : public Character
 public:
     Player(std::string name, int health, int strength, int weight);
 
-    void getPlayerBackpackContents() const;
-
 private:
 
 };

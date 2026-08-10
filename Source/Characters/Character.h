@@ -5,8 +5,7 @@
 #include <vector>
 #include <string>
 #include "Item.h"
-
-int RNG(int min, int max);
+#include "Backpack.h"
 
 class Character
 {
@@ -18,7 +17,9 @@ public:
     void takeDamage(const Character& attacker);
     [[nodiscard]] int dealDamage() const;
     void equipItem(size_t backpackSlot);
-    void useItem(int backpackSlot);
+    void useItem(size_t backpackSlot);
+    void getBackpackContents() const;
+
 
     //Setters
     void setName(std::string newCharacterName) {characterName = std::move(newCharacterName);}
@@ -47,7 +48,7 @@ protected:
     int characterMaxWeight = 50;
     int characterCurrentWeight = 0;
 
-    std::vector<std::unique_ptr<Item>> backpack;
+    Backpack inventory;
     std::unique_ptr<Item> characterItemEquipped = nullptr;
 };
 

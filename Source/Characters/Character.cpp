@@ -15,40 +15,23 @@ void Character::pickupItem(std::unique_ptr<Item> item)
         std::cout << "Too heavy!\n\n";
         return;
     }
-
     characterCurrentWeight += item->getItemWeight();
     std::cout << "Picked up " << item->getItemName() << "\n\n";
-
-    bool slotFilled = false;
-
-    for (auto& i : backpack)
-    {
-
-        if (i == nullptr)
-        {
-            i = std::move(item);
-            slotFilled = true;
-            break;
-        }
-    }
-
-    if (!slotFilled)
-        backpack.push_back(std::move(item));
+    inventory.storeItem(std::move(item));
 }
 
 void Character::dropItem(const size_t backpackSlot)
 {
-    if (backpackSlot >= backpack.size())
+    std::unique_ptr<Item> itemToDrop = inventory.dropItem(backpackSlot);
+
+    if (itemToDrop == nullptr)
     {
-        std::cout << "Invalid slot!\n\n";
+        std::cout << "No item in this slot or invalid slot.\n\n";
     }
-    else if (backpack[backpackSlot] == nullptr)
-        std::cout << "No Item in this slot\n\n";
     else
     {
-        characterCurrentWeight -= backpack[backpackSlot]->getItemWeight();
-        std::cout << backpack[backpackSlot]->getItemName() << " dropped.\n\n";
-        backpack[backpackSlot] = nullptr;
+        characterCurrentWeight -= itemToDrop->getItemWeight();
+        std::cout << "Dropped " << itemToDrop->getItemName() << "\n\n";
     }
 }
 
@@ -89,34 +72,41 @@ int Character::dealDamage() const
 
 void Character::equipItem(const size_t backpackSlot)
 {
-    if (backpackSlot >= backpack.size())
+    std::unique_ptr<Item> newItem = inventory.equipItem(backpackSlot);
+
+    if (newItem == nullptr)
     {
-        std::cout << "Invalid backpack slot.\n\n";
+        std::cout << "Invalid or Empty slot!\n\n";
+        inventory.storeItem(std::move(newItem), backpackSlot);
         return;
     }
-    std::swap(characterItemEquipped, backpack[backpackSlot]);
-    std::cout << characterItemEquipped->getItemName() << " equipped\n\n";
+    std::swap(characterItemEquipped, newItem);
+    inventory.storeItem(std::move(newItem), backpackSlot);
+    std::cout << characterItemEquipped->getItemName() << " equipped.\n\n";
 }
 
 void Character::getItem(const size_t backpackSlot) const
 {
-    if (backpackSlot >= backpack.size())
-        std::cout << "Invalid slot!\n\n";
-    else if (backpack[backpackSlot] == nullptr)
-        std::cout << "Slot is empty!\n\n";
-    else
-    {
-        std::cout << "Slot " << backpack[backpackSlot] << ":\n";
-        std::cout << "Name: " << backpack[backpackSlot]->getItemName() << std::endl;
-        std::cout << "Strength: " << backpack[backpackSlot]->getItemRarityStrength() << std::endl;
-        std::cout << "Rarity: " << backpack[backpackSlot]->getItemRarityColor() << std::endl;
-        std::cout << "Weight: " << backpack[backpackSlot]->getItemWeight() << std::endl;
-        std::cout << '\n';
-    }
-
+    inventory.getItem(backpackSlot);
 }
 
-void Character::useItem(int backpackSlot)
+void Character::useItem(size_t backpackSlot)
 {
-    backpack[backpackSlot]->itemEffects(*this);
+    std::unique_ptr<Item> item = inventory.equipItem(backpackSlot);
+
+    if (item == nullptr)
+    {
+        std::cout << "Invalid inventory slot\n\n";
+        return;
+    }
+
+    const bool useItem = item->itemEffects(*this);
+
+    if (!useItem)
+        inventory.storeItem(std::move(item), backpackSlot);
+}
+
+void Character::getBackpackContents() const
+{
+    inventory.getBackpackContents();
 }
