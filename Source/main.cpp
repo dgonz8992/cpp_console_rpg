@@ -9,7 +9,6 @@
 
 int main()
 {
-
     Player player("Bob", 100, 10, 75);
     Character enemy("Hobgoblin", 100, 10, 75);
     Store store;
@@ -21,12 +20,10 @@ int main()
     auto shield = std::make_unique<Item>("Shield", Item::ItemType::shield, Item::Rarity::white, 100);
     auto shield1 = std::make_unique<Item>("Shield", Item::ItemType::shield, Item::Rarity::white, 100);
 
-
     store.addItem(std::move(sword));
     store.addItem(std::move(shield));
     store.addItem(std::move(potion));
     store.addItem(std::move(shield1));
-
 
     std::string playerName;
     std::cout << "Enter player name: ";
@@ -44,16 +41,20 @@ int main()
         std::cout << "Selection: ";
         std::cin >> selection;
 
-        if(selection == -1)
+        if (selection == -1)
             break;
 
         std::unique_ptr<Item> purchasedItem = std::move(store.purchaseItem(selection));
         if (purchasedItem == nullptr)
         {
-           std::cout << "Item is sold out!\n\n";
-            continue;
+            std::cout << "Item is sold out!\n\n";
+        } else if (!player.pickupItem(std::move(purchasedItem)))
+        {
+            store.addItem(std::move(purchasedItem));
+            std::cout << "Cannot purchase because it's too heavy!\n\n";
         }
-        player.pickupItem(std::move(purchasedItem));
+        else
+            player.pickupItem(std::move(purchasedItem)jn );
     }
 
     std::cout << "You have exited the store.";

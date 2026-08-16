@@ -12,7 +12,7 @@ class Character
 public:
     Character(std::string name, int health, int strength, int weight);
 
-    void pickupItem(std::unique_ptr<Item> item);
+    bool pickupItem(std::unique_ptr<Item> item);
     void dropItem(size_t backpackSlot);
     void takeDamage(const Character& attacker);
     [[nodiscard]] int dealDamage() const;
@@ -41,7 +41,7 @@ public:
 protected:
     std::string characterName;
     int maxCharacterHealth;
-    int characterHealth = maxCharacterHealth;
+    int characterHealth;
 
     int characterStrength = 10;
 

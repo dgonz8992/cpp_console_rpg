@@ -4,20 +4,22 @@
 #include "Character.h"
 
 Character::Character(std::string name, int health, int strength, int weight)
-    : characterName(std::move(name)), maxCharacterHealth(health), characterStrength(strength), characterMaxWeight(weight)
+    : characterName(std::move(name)), maxCharacterHealth(health), characterHealth(health),
+        characterStrength(strength), characterMaxWeight(weight)
 {}
 
-void Character::pickupItem(std::unique_ptr<Item> item)
+bool Character::pickupItem(std::unique_ptr<Item> item)
 {
 
     if (characterCurrentWeight + item->getItemWeight() > characterMaxWeight)
     {
         std::cout << "Too heavy!\n\n";
-        return;
+        return false;
     }
     characterCurrentWeight += item->getItemWeight();
     std::cout << "Picked up " << item->getItemName() << "\n\n";
     inventory.stashItem(std::move(item));
+    return true;
 }
 
 void Character::dropItem(const size_t backpackSlot)

@@ -15,7 +15,7 @@ public:
    bool itemEffects(Character& character) override;
 
 private:
-    bool potionEffectAmount;
+    int potionEffectAmount;
 };
 
 
